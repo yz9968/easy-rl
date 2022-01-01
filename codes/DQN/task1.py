@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# coding=utf-8
 '''
 Author: JiangJi
 Email: johnjim0816@gmail.com

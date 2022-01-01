@@ -4,6 +4,8 @@ import torch.optim as optim
 import torch.autograd as autograd 
 import random
 import math
+import numpy as np
+
 class CNN(nn.Module):
     def __init__(self, input_dim, output_dim):
         super(CNN, self).__init__()
@@ -34,16 +36,6 @@ class CNN(nn.Module):
     
     def feature_size(self):
         return self.features(autograd.Variable(torch.zeros(1, *self.input_dim))).view(1, -1).size(1)
-
-
-    def act(self, state, epsilon):
-        if random.random() > epsilon:
-            state   = Variable(torch.FloatTensor(np.float32(state)).unsqueeze(0), volatile=True)
-            q_value = self.forward(state)
-            action  = q_value.max(1)[1].data[0]
-        else:
-            action = random.randrange(env.action_space.n)
-        return action
 
 class ReplayBuffer:
     def __init__(self, capacity):

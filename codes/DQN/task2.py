@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# coding=utf-8
 '''
 Author: JiangJi
 Email: johnjim0816@gmail.com
@@ -20,7 +18,7 @@ import datetime
 from common.utils import save_results, make_dir
 from common.utils import plot_rewards, plot_rewards_cn
 from common.atari_wrappers import make_atari, wrap_deepmind
-from DQN.dqn import DQN
+from DQN.dqn_cnn import DQN
 
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
 algo_name = 'DQN-cnn'  # 算法名称
@@ -68,7 +66,7 @@ def env_agent_config(cfg, seed=1):
     # env    = wrap_deepmind(env)
     # env    = wrap_pytorch(env) 
     env.seed(seed)  # 设置随机种子
-    n_states = env.observation_space.shape[0]  # 状态数
+    n_states = env.observation_space.shape  # 状态shape
     n_actions = env.action_space.n  # 动作数
     agent = DQN(n_states, n_actions, cfg)  # 创建智能体
     return env, agent
@@ -84,6 +82,7 @@ def train(cfg, env, agent):
         ep_reward = 0 # 记录一回合内的奖励
         state = env.reset() # 重置环境，返回初始状态
         while True:
+            env.render()
             action = agent.choose_action(state) # 选择动作
             next_state, reward, done, _ = env.step(action) # 更新环境，返回transition
             agent.memory.push(state, action, reward, next_state, done) # 保存transition
