@@ -15,7 +15,7 @@ curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时
 
 class PPOConfig:
     def __init__(self) -> None:
-        self.algo = "PPO"  # 算法名称
+        self.algo_name = "PPO"  # 算法名称
         self.env_name = 'Pendulum-v1' # 环境名称
         self.continuous = True # 环境是否为连续动作
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU

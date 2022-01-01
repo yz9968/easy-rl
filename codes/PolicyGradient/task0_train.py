@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 # coding=utf-8
 '''
 Author: John
@@ -33,7 +33,7 @@ class PGConfig:
             '/'+curr_time+'/results/'  # 保存结果的路径
         self.model_path = curr_path+"/outputs/" + self.env + \
             '/'+curr_time+'/models/'  # 保存模型的路径
-        self.train_eps = 300 # 训练的回合数
+        self.train_eps = 500 # 训练的回合数
         self.test_eps = 30 # 测试的回合数
         self.batch_size = 8
         self.lr = 0.01 # 学习率

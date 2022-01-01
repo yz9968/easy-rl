@@ -35,7 +35,8 @@ class PPO:
         dist = self.actor(state)
         value = self.critic(state)
         action = dist.sample()
-        probs = torch.squeeze(dist.log_prob(action)).item()
+        probs = torch.squeeze(dist.log_prob(action)).item() 
+        # probs = torch.gather(torch.squeeze(dist.probs),0,action).item()
         if self.continuous:
             action = torch.tanh(action)
         else:
@@ -68,7 +69,9 @@ class PPO:
                 critic_value = self.critic(states)
                 critic_value = torch.squeeze(critic_value)
                 new_probs = dist.log_prob(actions)
+                # new_probs = torch.gather(dist.probs,1,torch.tensor(torch.unsqueeze(actions,1),dtype=torch.int64)).squeeze()
                 prob_ratio = new_probs.exp() / old_probs.exp()
+                # prob_ratio = new_probs / old_probs
                 weighted_probs = advantage[batch] * prob_ratio
                 weighted_clipped_probs = torch.clamp(prob_ratio, 1-self.policy_clip,
                         1+self.policy_clip)*advantage[batch]
@@ -76,11 +79,12 @@ class PPO:
                 returns = advantage[batch] + values[batch]
                 critic_loss = (returns-critic_value)**2
                 critic_loss = critic_loss.mean()
-                total_loss = actor_loss + 0.5*critic_loss
-                self.loss  = total_loss
+                # total_loss = actor_loss + 0.5*critic_loss
+                # self.loss  = total_loss
                 self.actor_optimizer.zero_grad()
                 self.critic_optimizer.zero_grad()
-                total_loss.backward()
+                actor_loss.backward()
+                critic_loss.backward()
                 self.actor_optimizer.step()
                 self.critic_optimizer.step()
         self.memory.clear()  

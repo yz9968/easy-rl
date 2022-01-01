@@ -60,8 +60,7 @@ if __name__ == '__main__':
     import gym
     import torch
     import datetime
-    from common.plot import plot_rewards
-    from common.utils import save_results,make_dir
+    from common.utils import save_results,make_dir,plot_rewards
     from PPO.agent import PPO
     from PPO.train import train
 
@@ -87,7 +86,7 @@ if __name__ == '__main__':
 
     class PlotConfig:
         def __init__(self) -> None:
-            self.algo = "DQN"  # 算法名称
+            self.algo_name = "DQN"  # 算法名称
             self.env_name = 'CartPole-v0' # 环境名称
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
             self.result_path = curr_path+"/outputs/" + self.env_name + \
@@ -98,7 +97,7 @@ if __name__ == '__main__':
 
     def env_agent_config(cfg,seed=1):
         env = gym.make(cfg.env_name)  
-        env.seed(seed)
+        # env.seed(seed)
         n_states = env.observation_space.shape[0]
         n_actions = env.action_space.n
         agent = PPO(n_states,n_actions,cfg)

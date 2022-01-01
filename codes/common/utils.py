@@ -22,7 +22,7 @@ def chinese_font():
     '''
     try:
         font = FontProperties(
-        fname='/System/Library/Fonts/STHeiti Light.ttc', size=15) # fname系统字体路径，此处是mac的
+        fname=r'C:\Windows\Fonts\Deng.ttf', size=15) # fname系统字体路径，此处是mac的
     except:
         font = None
     return font
