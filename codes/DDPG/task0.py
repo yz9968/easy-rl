@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# coding=utf-8
 '''
 @Author: John
 @Email: johnjim0816@gmail.com
@@ -75,7 +73,7 @@ plot_rewards(rewards, ma_rewards, plot_cfg, tag="train")  # 画出结果
 # 测试
 env,agent = env_agent_config(cfg,seed=10)
 agent.load(path=plot_cfg.model_path)
-rewards,ma_rewards = test(plot_cfg,env,agent)
-save_results(rewards,ma_rewards,tag = 'test',path = cfg.result_path)
+rewards,ma_rewards = test(cfg,env,agent)
+save_results(rewards,ma_rewards,tag = 'test',path = plot_cfg.result_path)
 plot_rewards(rewards, ma_rewards, plot_cfg, tag="test")  # 画出结果
 

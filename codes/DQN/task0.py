@@ -55,7 +55,7 @@ def env_agent_config(cfg, seed=1):
     agent = DQN(n_states, n_actions, cfg)  # 创建智能体
     return env, agent
 
-def train(cfg, env, agent):
+def train(cfg, env, agent:DQN):
     ''' 训练
     '''
     print('开始训练!')

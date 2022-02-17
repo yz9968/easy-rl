@@ -8,7 +8,7 @@ from DDPG.env import OUNoise
 
 def train(cfg, env, agent):
     print('开始训练！')
-    print(f'环境：{cfg.env_name}，算法：{cfg.algo}，设备：{cfg.device}')
+    print(f'环境：{cfg.env_name}，算法：{cfg.algo_name}，设备：{cfg.device}')
     ou_noise = OUNoise(env.action_space)  # 动作噪声
     rewards = [] # 记录所有回合的奖励
     ma_rewards = []  # 记录所有回合的滑动平均奖励
@@ -39,7 +39,7 @@ def train(cfg, env, agent):
 
 def test(cfg, env, agent):
     print('开始测试！')
-    print(f'环境：{cfg.env_name}, 算法：{cfg.algo}, 设备：{cfg.device}')
+    print(f'环境：{cfg.env_name}, 算法：{cfg.algo_name}, 设备：{cfg.device}')
     rewards = [] # 记录所有回合的奖励
     ma_rewards = []  # 记录所有回合的滑动平均奖励
     for i_ep in range(cfg.test_eps):
@@ -48,12 +48,13 @@ def test(cfg, env, agent):
         ep_reward = 0
         i_step = 0
         while not done:
+            env.render()
             i_step += 1
             action = agent.choose_action(state)
             next_state, reward, done, _ = env.step(action)
             ep_reward += reward
             state = next_state
-        print('回合：{}/{}, 奖励：{}'.format(i_ep+1, cfg.train_eps, ep_reward))
+        # print('回合：{}/{}, 奖励：{}'.format(i_ep+1, cfg.train_eps, ep_reward))
         rewards.append(ep_reward)
         if ma_rewards:
             ma_rewards.append(0.9*ma_rewards[-1]+0.1*ep_reward)

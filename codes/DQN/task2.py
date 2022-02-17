@@ -32,7 +32,7 @@ class DQNConfig:
         self.algo_name = algo_name  # 算法名称
         self.env_name = env_name  # 环境名称
         self.device = device # 检测GPU
-        self.train_eps = 500  # 训练的回合数
+        self.train_eps = 200  # 训练的回合数
         self.test_eps = 30  # 测试的回合数
         # 超参数
         self.gamma = 0.95  # 强化学习中的折扣因子

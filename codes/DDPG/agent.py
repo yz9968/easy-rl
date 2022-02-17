@@ -85,8 +85,7 @@ class DDPG:
         for target_param, param in zip(self.target_actor.parameters(), self.actor.parameters()):
             target_param.data.copy_(param.data)
 
-        self.critic_optimizer = optim.Adam(
-            self.critic.parameters(),  lr=cfg.critic_lr)
+        self.critic_optimizer = optim.Adam(self.critic.parameters(),  lr=cfg.critic_lr)
         self.actor_optimizer = optim.Adam(self.actor.parameters(), lr=cfg.actor_lr)
         self.memory = ReplayBuffer(cfg.memory_capacity)
         self.batch_size = cfg.batch_size
